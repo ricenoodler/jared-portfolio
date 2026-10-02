@@ -1,18 +1,25 @@
 {
-  "name": "portfoliowebsiteproject",
+  "name": "jared-del-mundo-portfolio",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "devDependencies": {
-    "vite": "^6.0.5"
+    "dev": "vite --host 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src scripts eslint.config.js",
+    "check:browser": "node scripts/check-browser.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/postbuild.mjs",
+    "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "portfoliowebsiteproject": "file:",
-    "three": "^0.173.0"
+    "marked": "^15.0.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "eslint": "^9.25.1",
+    "playwright-core": "^1.63.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.31.1",
+    "vite": "^6.3.4"
   }
 }
