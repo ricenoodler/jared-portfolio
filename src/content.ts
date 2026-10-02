@@ -1,7 +1,7 @@
 // Edit this file to change the homepage text, links, and image paths.
 export const site = {
   name: 'Jared Del Mundo',
-  email: 'bangelpilot@gmail.com',
+  email: 'jared@delmundo.info',
   github: 'https://github.com/ricenoodler',
   linkedin: 'https://www.linkedin.com/in/jared-del-mundo-99ba23245/',
   resume: '/resume', // This route can later link to a PDF in public/resume.pdf.
@@ -9,7 +9,7 @@ export const site = {
 
 export const projects = [
   {
-    slug: 'proxmox-homelab',
+    slug: 'proxmox-homelab', date: '2026-10-01', featured: true,
     title: 'Proxmox Homelab',
     description: 'A virtualized space for learning, testing, and running services at home.',
     detail: 'A living lab for virtual machines, containers, storage, backups, and the little experiments that become bigger infrastructure projects.',
@@ -18,7 +18,7 @@ export const projects = [
     imageAlt: 'Illustrated placeholder for a homelab rack at sunset',
   },
   {
-    slug: 'unifi-network-segmentation',
+    slug: 'unifi-network-segmentation', date: '2026-09-20', featured: true,
     title: 'UniFi Network Segmentation',
     description: 'VLANs, firewall rules, and a more intentional home network.',
     detail: 'A practical network design exercise separating devices by purpose, defining the traffic they need, and documenting why each rule exists.',
@@ -27,7 +27,7 @@ export const projects = [
     imageAlt: 'Illustrated placeholder for a segmented network',
   },
   {
-    slug: 'windows-server-ad-lab',
+    slug: 'windows-server-ad-lab', date: '2026-08-15', featured: true,
     title: 'Windows Server / Active Directory Lab',
     description: 'An environment for learning identity, policy, DNS, and administration.',
     detail: 'A hands on Windows Server lab exploring domain services, users and groups, Group Policy, and the day to day work of administration.',
@@ -68,3 +68,6 @@ export const moments = [
   { title: 'On the ground', caption: 'A place for an airport, airplane, or Pegasus Pilots moment.', image: '/images/moments/moment-05.svg', alt: 'Illustrated placeholder for an airport photo' },
   { title: 'Night lights', caption: 'A place for a frame from a city evening.', image: '/images/moments/moment-06.svg', alt: 'Illustrated placeholder for a night city photo' },
 ];
+
+export const sortedProjects = [...projects].sort((a,b)=>b.date.localeCompare(a.date));
+export const featuredProjects = sortedProjects.filter(p=>p.featured).slice(0,3);

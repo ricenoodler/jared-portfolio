@@ -1,4 +1,6 @@
 ---
+draft: true
+tags: Linux, Notes
 title: Upgrading my server from Proxmox 8 to 9
 date: 2026-10-01
 shortDate: OCT 01

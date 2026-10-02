@@ -1,4 +1,6 @@
 ---
+draft: true
+tags: Linux, Notes
 title: Building my portfolio
 date: 2026-09-15
 shortDate: SEP 15

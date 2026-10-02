@@ -21,11 +21,9 @@ The GitHub Actions workflow builds and deploys `dist/` on pushes to `master`. Se
 ## Edit content
 
 - `src/content.ts`: homepage text, project details, interests, values, trivia, gallery captions, and social links.
-- `content/notes/*.md`: Markdown notes. Each file needs `title`, `date`, `shortDate`, and `excerpt` frontmatter. The filename becomes the URL slug.
 - `src/style.css`: layout, type, colors, and motion.
 - `index.html`: default page description and font loading.
 
-The three note bodies are labeled draft placeholders. Replace them with your actual writing before presenting them as finished posts.
 
 ## Replace images
 
@@ -33,7 +31,7 @@ Every current `.svg` is an illustrated placeholder. Replace the path in `src/con
 
 | Use | Suggested real asset |
 | --- | --- |
-| Hero portrait | `public/images/hero/portrait.webp` — then update the `.portrait-frame` background in `src/style.css` |
+| Hero portrait | public/images/hero/portrait.webp (used by the hero directly) |
 | Hero city artwork | `public/images/hero/background.webp` — then update `.hero-art` in `src/style.css` |
 | Proxmox Homelab | `public/images/projects/homelab.webp` |
 | UniFi Network Segmentation | `public/images/projects/unifi.webp` |
@@ -46,7 +44,6 @@ Every current `.svg` is an illustrated placeholder. Replace the path in `src/con
 | Moments backdrop | `public/images/moments/background.webp` — then update `.moments` in `src/style.css` |
 | Footer skyline | `public/images/footer/skyline.webp` — then update `.footer-skyline` in `src/style.css` |
 
-Use images you own or have permission to publish. The portrait slot deliberately contains no generated face. For gallery items, update the title, caption, and alt text next to the image path in `src/content.ts`.
 
 ## Links and resume
 
@@ -55,3 +52,49 @@ The LinkedIn link was recovered from the previous site. The GitHub profile comes
 ## Existing source
 
 The previous Vite/Three.js tutorial source is retained in `jared-portfolio-master.zip` outside this repository. The old UI was replaced in the original Git repository, while its history and domain name were retained.
+
+### Add a note
+
+Create a Markdown file in content/notes/, add frontmatter, then push to GitHub. No TypeScript changes are needed. Use title, date (YYYY-MM-DD), excerpt, optional comma-separated tags, featured, and draft fields. Draft notes stay out of public pages.
+
+### Add a note
+
+Create a Markdown file in content/notes, copy this frontmatter, write the note body, then commit and push. No TypeScript changes are needed.
+
+~~~md
+---
+title: Upgrading Proxmox 8 to 9
+date: 2026-10-01
+excerpt: What broke, what worked, and what I learned.
+tags: Proxmox, Linux, Homelab
+featured: true
+draft: false
+---
+
+Write the note here.
+~~~
+
+Dates use YYYY-MM-DD. Optional featured defaults to false and draft defaults to false. Set draft to true while writing; draft notes are not public.
+
+## Projects
+
+Edit project titles, descriptions, tags, image paths, ISO dates, and featured flags in src/content.ts. The Projects page sorts newest to oldest automatically. The homepage shows up to three featured projects, newest first.
+
+## Add a note
+
+Create a Markdown file in content/notes, add this frontmatter and your note body, then commit and push. No TypeScript changes are needed.
+
+~~~md
+---
+title: Upgrading Proxmox 8 to 9
+date: 2026-10-01
+excerpt: What broke, what worked, and what I learned.
+tags: Proxmox, Linux, Homelab
+featured: true
+draft: false
+---
+
+Write the note here.
+~~~
+
+Date uses YYYY-MM-DD. Tags are comma-separated. Draft notes stay private when draft is true; notes are sorted newest first.

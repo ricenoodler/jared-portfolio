@@ -1,36 +1,7 @@
-import { marked } from 'marked';
-
-export interface Note {
-  slug: string;
-  title: string;
-  date: string;
-  shortDate: string;
-  excerpt: string;
-  body: string;
-}
-
-const files = import.meta.glob('../content/notes/*.md', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
-
-function parseNote(path: string, source: string): Note {
-  const match = source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
-  if (!match) throw new Error(`Missing frontmatter: ${path}`);
-  const metadata = Object.fromEntries(match[1].split(/\r?\n/).map((line) => {
-    const divider = line.indexOf(':');
-    return [line.slice(0, divider).trim(), line.slice(divider + 1).trim()];
-  }));
-  return {
-    slug: path.split('/').pop()?.replace(/\.md$/, '') ?? '',
-    title: metadata.title,
-    date: metadata.date,
-    shortDate: metadata.shortDate,
-    excerpt: metadata.excerpt,
-    body: match[2],
-  };
-}
-
-export const notes = Object.entries(files).map(([path, source]) => parseNote(path, source)).sort((a, b) => b.date.localeCompare(a.date));
-
-marked.setOptions({ gfm: true, breaks: false });
-export function renderMarkdown(source: string): string {
-  return marked.parse(source, { async: false }) as string;
-}
+import {marked} from 'marked';
+export interface Note {slug:string;title:string;date:string;shortDate:string;excerpt:string;tags:string[];featured:boolean;draft:boolean;body:string}
+const files=import.meta.glob('../content/notes/*.md',{query:'?raw',import:'default',eager:true}) as Record<string,string>;
+function parse(path:string,source:string):Note {const m=source.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);if(!m)throw Error('Missing frontmatter: '+path);const x=Object.fromEntries(m[1].split(/\r?\n/).flatMap(l=>{const i=l.indexOf(':');return i<0?[]:[[l.slice(0,i).trim(),l.slice(i+1).trim()]]}));const date=x.date||'',d=new Date(date+'T00:00:00');return {slug:path.split('/').pop()?.replace(/\.md$/,'')??'',title:x.title||'',date,shortDate:x.shortDate||(Number.isNaN(d.getTime())?date:new Intl.DateTimeFormat('en',{month:'short',day:'2-digit'}).format(d).toUpperCase()),excerpt:x.excerpt||'',tags:(x.tags||'').replace(/^\[/,'').replace(/\]$/,'').split(',').map(t=>t.trim()).filter(Boolean),featured:x.featured==='true',draft:x.draft==='true',body:m[2]}}
+export const allNotes=Object.entries(files).map(([p,s])=>parse(p,s)).sort((a,b)=>b.date.localeCompare(a.date));
+export const notes=allNotes.filter(n=>!n.draft);export const featuredNotes=notes.filter(n=>n.featured);
+marked.setOptions({gfm:true,breaks:false});export function renderMarkdown(s:string):string{return marked.parse(s,{async:false}) as string}

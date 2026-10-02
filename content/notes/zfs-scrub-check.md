@@ -1,4 +1,6 @@
 ---
+draft: true
+tags: Linux, Notes
 title: Why my ZFS scrub report kept saying “CHECK”
 date: 2026-09-27
 shortDate: SEP 27

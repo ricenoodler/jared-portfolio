@@ -86,7 +86,7 @@ try {
   await motionPage.close();
   results.errors = errors;
   assert.deepEqual(results.homeSections, ['hero', 'featured', 'interests', 'values', 'trivia', 'moments', 'latest-notes']);
-  assert.deepEqual(results.homeCounts, { projects: 3, interests: 4, values: 4, trivia: 6, moments: 6, notes: 3 });
+  assert.deepEqual(results.homeCounts, { projects: 3, interests: 4, values: 4, trivia: 6, moments: 6, notes: 0 });
   assert.equal(results.projectNavigation.path, '/projects');
   assert.equal(results.menu.expanded, 'true');
   assert.equal(results.menu.visible, true);
