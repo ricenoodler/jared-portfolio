@@ -8,14 +8,17 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src scripts eslint.config.js",
     "check:browser": "node scripts/check-browser.mjs",
+    "check:architecture": "node scripts/check-architecture.mjs",
     "build": "tsc --noEmit && vite build && node scripts/postbuild.mjs",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {
-    "marked": "^15.0.12"
+    "marked": "^15.0.12",
+    "three": "^0.186.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.1",
+    "@types/three": "^0.186.0",
     "eslint": "^9.25.1",
     "playwright-core": "^1.63.0",
     "typescript": "^5.8.3",

@@ -1,6 +1,6 @@
 # Jared Del Mundo portfolio
 
-A long form personal portfolio built with Vite and TypeScript. The homepage has eight sections: hero, featured projects, interests, values, trivia, moments, latest notes, and footer. `/projects`, `/notes`, individual note URLs, and `/resume` are available as direct routes.
+A long form personal portfolio built with Vite and TypeScript. The homepage has eight sections: hero, featured projects, interests, values, trivia, moments, latest notes, and footer. `/projects`, `/notes`, individual note and project URLs, and `/resume` are available as direct routes.
 
 ## Run it
 
@@ -78,7 +78,19 @@ Dates use YYYY-MM-DD. Optional featured defaults to false and draft defaults to 
 
 ## Projects
 
-Edit project titles, descriptions, tags, image paths, ISO dates, and featured flags in src/content.ts. The Projects page sorts newest to oldest automatically. The homepage shows up to three featured projects, newest first.
+Edit all project metadata and case study copy in `src/content.ts`. Add one object to `projects` with a unique URL-safe `slug`, ISO `date` (`YYYY-MM-DD`), `featured`, `status`, `title`, short `description`, longer `summary`, list `detail`, `tags`, `image`, `imageAlt`, and `caseStudy`.
+
+The project automatically appears at `/projects/<slug>`. The index sorts every project newest first. The homepage shows at most three projects with `featured: true`, also newest first. Cards on both pages link to the dedicated route.
+
+`caseStudy` holds `overview`, `motivation`, and `implementation` entries. Add a `challenges` item with a title, diagnosis, and resolution when you have a real fix to document. Add `lessons` strings, `media` items (`src`, `alt`, `caption`), and published note slugs in `relatedNotes` as they become available. Empty optional arrays keep those sections hidden.
+
+For Proxmox or UniFi, set `caseStudy.architecture` to `'proxmox'` or `'unifi'`. Edit public nodes and connections in `src/data/proxmoxArchitecture.ts` or `src/data/unifiArchitecture.ts`. The Three.js scene in `src/components/ArchitectureScene.ts` reads those same nodes and connections; `src/components/ProjectArchitecture.ts` keeps the detail panel and card fallback when WebGL is unavailable. Keep credentials, addresses, tokens, and internal access details out of architecture data.
+
+The architecture explorer opens one level at a time. View buttons focus the same 3D scene on a topic. Click a node or its label to select it; click the background or use Back/Escape/Left Arrow to move up. Camera controls are separate: use +/− or the mouse wheel to zoom, Fit to frame the visible graph, and Reset to return to the project's initial camera. Left drag orbits, right drag pans, and node labels work with keyboard Tab and Enter. On touch screens, drag sideways to orbit and pinch to zoom; vertical page scrolling remains available. Details appear in a bottom sheet on mobile. Inactive containers stay hidden until Show inactive is selected.
+
+To add a service or container, add a node with a unique `id`, `parent`, label, type, category, and description in the relevant architecture file. Its `parent` places it in the 3D hierarchy and controls when it appears during drill-down; no scene code needs editing. Add a labeled connection with `from`, `to`, `type`, `direction`, and relevant `views` when a relationship should appear. For an exited container, set `status: 'inactive'`. Keep private addresses, credentials, and identifiers out of public files. Run `npm run build`, start `npm run preview`, then run `npm run check:architecture` after editing.
+
+The build copies `dist/index.html` to `dist/404.html` so direct project links load through the existing GitHub Pages client router.
 
 ## Add a note
 

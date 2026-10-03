@@ -38,6 +38,7 @@ try {
   const desktop = await check('/', 1440, 900, 'check-desktop.png'); results.desktop = desktop.metrics;
   results.homeSections = await desktop.page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.id || 'hero'));
   results.homeCounts = await desktop.page.evaluate(() => ({ projects: document.querySelectorAll('.project-card').length, interests: document.querySelectorAll('.interest-row').length, values: document.querySelectorAll('.value-item').length, trivia: document.querySelectorAll('.trivia-list li').length, moments: document.querySelectorAll('.moment-tile').length, notes: document.querySelectorAll('.latest-notes .note-row').length }));
+  results.homeFeaturedLinks = await desktop.page.locator('.project-card .project-image').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
   await desktop.page.locator('.project-image').first().click();
   results.projectNavigation = { path: new URL(desktop.page.url()).pathname, hash: new URL(desktop.page.url()).hash };
   await desktop.page.close();
@@ -51,18 +52,19 @@ try {
   await mobile.page.keyboard.press('Escape');
   results.momentEscape = await mobile.page.locator('.moment-dialog').evaluate((dialog) => dialog.open);
   await mobile.page.close();
-  for (const [name, path] of Object.entries({ projects: '/projects', notes: '/notes', article: '/notes/building-my-portfolio', resume: '/resume', unknown: '/unknown' })) {
+  for (const [name, path] of Object.entries({ projects: '/projects', proxmox: '/projects/proxmox-homelab', unifi: '/projects/unifi-network-segmentation', windows: '/projects/windows-server-ad-lab', missingProject: '/projects/not-a-project', notes: '/notes', article: '/notes/building-my-portfolio', resume: '/resume', unknown: '/unknown' })) {
     const checked = await check(path, 1440, 900, `check-${name}.png`);
     results[name] = checked.metrics;
+    if (name === 'projects') results.projectLinks = await checked.page.locator('.project-detail-image').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
     await checked.page.close();
   }
   results.mobileRoutes = {};
-  for (const path of ['/projects', '/notes', '/notes/building-my-portfolio', '/resume']) {
+  for (const path of ['/projects', '/projects/proxmox-homelab', '/projects/unifi-network-segmentation', '/projects/windows-server-ad-lab', '/notes', '/notes/building-my-portfolio', '/resume']) {
     const page = await browser.newPage({ viewport: { width: 320, height: 760 }, isMobile: true, reducedMotion: 'reduce' });
     const response = await page.goto(`${base}${path}`, { waitUntil: 'networkidle' });
     results.mobileRoutes[path] = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth, h1: document.querySelector('h1')?.textContent }));
     results.mobileRoutes[path].status = response?.status();
-    if (path === '/projects' || path === '/notes/building-my-portfolio') await page.screenshot({ path: `.qa/check-mobile-${path.replaceAll('/', '-').slice(1)}.png`, fullPage: true, animations: 'disabled' });
+    if (path === '/projects' || path === '/projects/proxmox-homelab' || path === '/notes/building-my-portfolio') await page.screenshot({ path: `.qa/check-mobile-${path.replaceAll('/', '-').slice(1)}.png`, fullPage: true, animations: 'disabled' });
     await page.close();
   }
   results.breakpoints = {};
@@ -87,7 +89,14 @@ try {
   results.errors = errors;
   assert.deepEqual(results.homeSections, ['hero', 'featured', 'interests', 'values', 'trivia', 'moments', 'latest-notes']);
   assert.deepEqual(results.homeCounts, { projects: 3, interests: 4, values: 4, trivia: 6, moments: 6, notes: 0 });
-  assert.equal(results.projectNavigation.path, '/projects');
+  assert.deepEqual(results.homeFeaturedLinks, ['/projects/proxmox-homelab', '/projects/unifi-network-segmentation', '/projects/windows-server-ad-lab']);
+  assert.deepEqual(results.projectLinks, results.homeFeaturedLinks);
+  assert.equal(results.projectNavigation.path, '/projects/proxmox-homelab');
+  assert.equal(results.projectNavigation.hash, '');
+  assert.equal(results.proxmox.h1, 'Proxmox Homelab.');
+  assert.equal(results.unifi.h1, 'UniFi Network Segmentation.');
+  assert.equal(results.windows.h1, 'Windows Server / Active Directory Lab.');
+  assert.match(results.missingProject.h1, /Wrong turn/);
   assert.equal(results.menu.expanded, 'true');
   assert.equal(results.menu.visible, true);
   assert.equal(results.menuEscape, 'false');
@@ -95,7 +104,7 @@ try {
   assert.equal(results.momentEscape, false);
   assert.equal(results.motion.visible, true);
   assert.ok(results.breakpoints[320].footerBrandRight <= 320);
-  for (const checked of [results.desktop, results.mobile, results.projects, results.notes, results.article, results.resume, ...Object.values(results.mobileRoutes), ...Object.values(results.breakpoints)]) {
+  for (const checked of [results.desktop, results.mobile, results.projects, results.proxmox, results.unifi, results.windows, results.notes, results.article, results.resume, ...Object.values(results.mobileRoutes), ...Object.values(results.breakpoints)]) {
     assert.equal(checked.documentWidth, checked.width ?? checked.viewport);
     if ('status' in checked) assert.equal(checked.status, 200);
   }

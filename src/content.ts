@@ -7,33 +7,103 @@ export const site = {
   resume: '/resume', // This route can later link to a PDF in public/resume.pdf.
 };
 
-export const projects = [
+export interface Project {
+  slug: string;
+  date: string;
+  featured: boolean;
+  title: string;
+  status: string;
+  description: string;
+  summary: string;
+  detail: string;
+  tags: string[];
+  image: string;
+  imageAlt: string;
+  caseStudy: {
+    overview: string;
+    motivation: string;
+    implementation: { title: string; description: string }[];
+    challenges: { title: string; diagnosis: string; resolution: string }[];
+    lessons: string[];
+    media: { src: string; alt: string; caption: string }[];
+    relatedNotes: string[];
+    architecture?: 'proxmox' | 'unifi';
+  };
+}
+
+export const projects: Project[] = [
   {
     slug: 'proxmox-homelab', date: '2026-10-01', featured: true,
     title: 'Proxmox Homelab',
+    status: 'Active',
+    summary: 'A hands on environment for learning how virtualization, storage, services, backups, and monitoring work together.',
     description: 'A virtualized space for learning, testing, and running services at home.',
     detail: 'A living lab for virtual machines, containers, storage, backups, and the little experiments that become bigger infrastructure projects.',
     tags: ['Proxmox', 'Linux', 'ZFS', 'Self hosting'],
     image: '/images/projects/homelab.svg',
     imageAlt: 'Illustrated placeholder for a homelab rack at sunset',
+    caseStudy: {
+      overview: 'My homelab brings virtual machines, container services, and shared storage into one place. It gives me room to test changes, document the results, and understand how each system affects the others.',
+      motivation: 'I wanted a practical space to learn infrastructure by running it, maintaining it, and improving it over time.',
+      implementation: [
+        { title: 'Virtualization', description: 'Proxmox organizes the host and its virtual machines, including a Debian environment for services.' },
+        { title: 'Services and storage', description: 'Container services, ZFS storage, and backups form the core areas I am documenting.' },
+        { title: 'Observability', description: 'Monitoring belongs in the map so I can follow the health of the host and its workloads.' },
+      ],
+      challenges: [],
+      lessons: [],
+      media: [],
+      relatedNotes: [],
+      architecture: 'proxmox',
+    },
   },
   {
     slug: 'unifi-network-segmentation', date: '2026-09-20', featured: true,
     title: 'UniFi Network Segmentation',
+    status: 'Active',
+    summary: 'A home network organized around clear device groups, deliberate traffic rules, and easier troubleshooting.',
     description: 'VLANs, firewall rules, and a more intentional home network.',
     detail: 'A practical network design exercise separating devices by purpose, defining the traffic they need, and documenting why each rule exists.',
     tags: ['UniFi', 'Networking', 'VLAN', 'Security'],
     image: '/images/projects/unifi.svg',
     imageAlt: 'Illustrated placeholder for a segmented network',
+    caseStudy: {
+      overview: 'This project maps how the UniFi gateway, VLANs, DNS, VPN, and connected systems fit together. The aim is to make network boundaries understandable and maintainable.',
+      motivation: 'Separating trusted devices, family devices, and IoT equipment helps me reason about access and document why each network exists.',
+      implementation: [
+        { title: 'Network groups', description: 'Trusted, Family, and IoT are the primary groups in the topology outline.' },
+        { title: 'Traffic relationships', description: 'The design focuses on segmentation, firewall relationships, DNS, and VPN access.' },
+        { title: 'Homelab placement', description: 'The Proxmox host appears as a networked system here; its internal services are documented in the homelab project.' },
+      ],
+      challenges: [],
+      lessons: [],
+      media: [],
+      relatedNotes: [],
+      architecture: 'unifi',
+    },
   },
   {
     slug: 'windows-server-ad-lab', date: '2026-08-15', featured: true,
     title: 'Windows Server / Active Directory Lab',
+    status: 'In progress',
+    summary: 'A Windows Server lab for practicing identity, policy, DNS, and everyday administration.',
     description: 'An environment for learning identity, policy, DNS, and administration.',
     detail: 'A hands on Windows Server lab exploring domain services, users and groups, Group Policy, and the day to day work of administration.',
     tags: ['Windows Server', 'Active Directory', 'GPO', 'DNS'],
     image: '/images/projects/windows-server.svg',
     imageAlt: 'Illustrated placeholder for a Windows Server lab',
+    caseStudy: {
+      overview: 'This lab is a place to work through domain services, user and group administration, Group Policy, and the supporting DNS configuration.',
+      motivation: 'I built it to practice the routine decisions involved in managing a Windows environment, with room to record specific configurations and fixes as the lab grows.',
+      implementation: [
+        { title: 'Identity', description: 'Explore users, groups, and the domain services that connect them.' },
+        { title: 'Policy and DNS', description: 'Practice Group Policy and DNS administration in a controlled lab.' },
+      ],
+      challenges: [],
+      lessons: [],
+      media: [],
+      relatedNotes: [],
+    },
   },
 ];
 

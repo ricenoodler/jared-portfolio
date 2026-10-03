@@ -1,11 +1,15 @@
 import './style.css';
+import './homepage.css';
+import './project-pages.css';
 import { Footer } from './components/Footer';
+import { initProjectArchitectures } from './components/ProjectArchitecture';
 import { Header } from './components/Header';
-import { moments } from './content';
+import { moments, sortedProjects } from './content';
 import { notes } from './notes';
 import { Home } from './pages/Home';
 import { NoteArticle, NotesIndex } from './pages/Notes';
 import { Projects } from './pages/Projects';
+import { ProjectArticle } from './pages/ProjectArticle';
 import { Resume } from './pages/Resume';
 
 const app = document.querySelector<HTMLDivElement>('#app');
@@ -19,6 +23,7 @@ function currentPath(): string {
 function pageContent(path: string): string {
   if (path === '/') return Home();
   if (path === '/projects') return Projects();
+  if (path.startsWith('/projects/')) return ProjectArticle(path.slice('/projects/'.length));
   if (path === '/notes') return NotesIndex();
   if (path.startsWith('/notes/')) return NoteArticle(path.slice('/notes/'.length));
   if (path === '/resume') return Resume();
@@ -26,10 +31,11 @@ function pageContent(path: string): string {
 }
 
 function setPageTitle(path: string): void {
+  const project = path.startsWith('/projects/') ? sortedProjects.find((entry) => entry.slug === path.slice('/projects/'.length)) : undefined;
   const note = path.startsWith('/notes/') ? notes.find((entry) => entry.slug === path.slice('/notes/'.length)) : undefined;
-  const label = path === '/' ? 'IT, systems & everything in between' : path === '/projects' ? 'Projects' : path === '/notes' ? 'Notes' : path === '/resume' ? 'Resume' : note?.title ?? 'Page not found';
+  const label = path === '/' ? 'IT, systems & everything in between' : path === '/projects' ? 'Projects' : path === '/notes' ? 'Notes' : path === '/resume' ? 'Resume' : project?.title ?? note?.title ?? 'Page not found';
   document.title = `${label} — Jared Del Mundo`;
-  const description = path === '/' ? 'Jared Del Mundo is an Information Technology student exploring systems, networks, aviation, and the things that keep him curious.' : path === '/projects' ? 'Explore Jared Del Mundo’s hands on systems, networking, and infrastructure projects.' : path === '/notes' ? 'Notes from Jared Del Mundo on technology, troubleshooting, and the things he is learning.' : path === '/resume' ? 'Jared Del Mundo’s web resume, focus areas, and current IT lab work.' : note?.excerpt ?? 'Jared Del Mundo’s personal portfolio.';
+  const description = path === '/' ? 'Jared Del Mundo is an Information Technology student exploring systems, networks, aviation, and the things that keep him curious.' : path === '/projects' ? 'Explore Jared Del Mundo’s hands on systems, networking, and infrastructure projects.' : path === '/notes' ? 'Notes from Jared Del Mundo on technology, troubleshooting, and the things he is learning.' : path === '/resume' ? 'Jared Del Mundo’s web resume, focus areas, and current IT lab work.' : project?.summary ?? note?.excerpt ?? 'Jared Del Mundo’s personal portfolio.';
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
 }
 
@@ -38,9 +44,10 @@ function render(): void {
   const path = currentPath();
   document.body.classList.toggle('is-home', path === '/');
   const content = pageContent(path);
-  const pageBody = path === '/' ? `<main id="main-content" tabindex="-1">${content}</main>` : `<div id="main-content" tabindex="-1">${content}</div>`;
+  const pageBody = path === '/' ? `<main id="main-content" tabindex="-1" class="home-page">${content}</main>` : `<div id="main-content" tabindex="-1">${content}</div>`;
   app.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><div id="top"></div>${Header()}${pageBody}${Footer()}<dialog class="moment-dialog" aria-label="Moment details"><button type="button" class="dialog-close" aria-label="Close image">×</button><div class="dialog-content"></div></dialog>`;
   setPageTitle(path);
+  initProjectArchitectures();
   revealObserver.disconnect();
   document.querySelectorAll<HTMLElement>('.reveal').forEach((element) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { element.classList.add('is-visible'); return; }
