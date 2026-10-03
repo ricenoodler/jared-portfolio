@@ -33,7 +33,7 @@ export function ProjectArticle(slug: string): string {
             <span class="case-kicker">PROJECT ${String(index + 1).padStart(2, '0')} / ${String(sortedProjects.length).padStart(2, '0')}</span>
             <h1>${escapeHtml(project.title)}<span class="accent-dot">.</span></h1>
             <p class="case-summary">${escapeHtml(project.summary)}</p>
-            <dl class="case-meta"><div><dt>Date</dt><dd><time datetime="${project.date}">${formatDate(project.date)}</time></dd></div><div><dt>Status</dt><dd>${escapeHtml(project.status)}</dd></div></dl>
+          <dl class="case-meta"><div><dt>${project.endDate ? 'Started' : 'Date'}</dt><dd><time datetime="${project.date}">${formatDate(project.date)}</time></dd></div>${project.endDate ? `<div><dt>Completed</dt><dd><time datetime="${project.endDate}">${formatDate(project.endDate)}</time></dd></div>` : ''}<div><dt>Status</dt><dd>${escapeHtml(project.status)}</dd></div></dl>
             <ul class="tag-list case-tags" aria-label="Topics">${project.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join('')}</ul>
           </div>
           <div class="case-hero-image reveal"><img src="${project.image}" alt="${escapeHtml(project.imageAlt)}" /></div>

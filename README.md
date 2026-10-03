@@ -78,9 +78,11 @@ Dates use YYYY-MM-DD. Optional featured defaults to false and draft defaults to 
 
 ## Projects
 
-Edit all project metadata and case study copy in `src/content.ts`. Add one object to `projects` with a unique URL-safe `slug`, ISO `date` (`YYYY-MM-DD`), `featured`, `status`, `title`, short `description`, longer `summary`, list `detail`, `tags`, `image`, `imageAlt`, and `caseStudy`.
+Use `date` for the project start date. For a finished project, add optional `endDate: 'YYYY-MM-DD'` and set `status: 'Completed'`. The project page shows both dates; project sorting still uses `date`.
 
-The project automatically appears at `/projects/<slug>`. The index sorts every project newest first. The homepage shows at most three projects with `featured: true`, also newest first. Cards on both pages link to the dedicated route.
+Edit all project metadata and case study copy in `src/content.ts`. Add one object to `projects` with a unique URL-safe `slug`, ISO `date` (`YYYY-MM-DD`), `featured`, optional `featuredPriority`, `status`, `title`, short `description`, longer `summary`, list `detail`, `tags`, `image`, `imageAlt`, and `caseStudy`.
+
+The project automatically appears at `/projects/<slug>`. The index sorts every project newest first. The homepage shows at most three projects with `featured: true`, ordered by `featuredPriority` (lower numbers first). Change those numbers in `src/content.ts` to choose what appears first; projects without a priority come after numbered projects. Cards on both pages link to the dedicated route.
 
 `caseStudy` holds `overview`, `motivation`, and `implementation` entries. Add a `challenges` item with a title, diagnosis, and resolution when you have a real fix to document. Add `lessons` strings, `media` items (`src`, `alt`, `caption`), and published note slugs in `relatedNotes` as they become available. Empty optional arrays keep those sections hidden.
 
