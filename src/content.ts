@@ -110,10 +110,10 @@ export const projects: Project[] = [
 ];
 
 export const interests = [
-  { number: '01', title: 'Aviation', japanese: '飛行機', description: 'Airplanes, airports, and everything that gets off the ground. I’m working toward flight training and love anything aviation related.', image: '/images/interests/aviation.svg', alt: 'Illustrated placeholder of an airplane at dusk' },
+  { number: '01', title: 'Aviation', japanese: '飛行機', description: 'Airplanes, airports, and everything that gets off the ground. I’m working toward flight training and love anything aviation related.', image: '/images/interests/checkridedpe.webp', alt: 'Me holding my Private Pilots License standing next to a Designated Pilot Examiner (DPE)' },
   { number: '02', title: 'Music', japanese: '音楽', description: 'Whether it’s playing, listening, or discovering new artists, music has always been a huge part of my life.', image: '/images/interests/music.svg', alt: 'Illustrated placeholder of a record player' },
-  { number: '03', title: 'Photography / Travel', japanese: '写真・旅', description: 'I like capturing moments, exploring new places, and noticing good design in cities, architecture, and airports.', image: '/images/interests/photography.svg', alt: 'Illustrated placeholder of a city street at dusk' },
-  { number: '04', title: 'Technology', japanese: '技術', description: 'Servers, networking, self hosting, and tinkering with systems that probably don’t need to be this complicated.', image: '/images/interests/technology.svg', alt: 'Illustrated placeholder of a desk and computer' },
+  { number: '03', title: 'Photography / Travel', japanese: '写真・旅', description: 'I like capturing moments, exploring new places, and noticing good design in cities, architecture, and airports.', image: '/images/interests/trainchicago.webp', alt: 'Blurred picture of red line train through Howard Station in Chicago' },
+  { number: '04', title: 'Technology', japanese: '技術', description: 'Servers, networking, self hosting, and tinkering with systems that probably don’t need to be this complicated.', image: '/images/interests/buildingnode.webp', alt: 'Illustrated placeholder of a desk and computer' },
 ];
 
 export const values = [
