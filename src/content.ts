@@ -27,7 +27,7 @@ export interface Project {
     implementation: { title: string; description: string }[];
     challenges: { title: string; diagnosis: string; resolution: string }[];
     lessons: string[];
-    media: { src: string; alt: string; caption: string }[];
+    media: { src?: string; alt: string; caption: string; plannedPath?: string }[];
     relatedNotes: string[];
     architecture?: 'proxmox' | 'unifi';
   };
@@ -86,27 +86,44 @@ export const projects: Project[] = [
   },
   {
     slug: 'windows-server-ad-lab', date: '2026-06-29', endDate: '2026-07-22', featured: true, featuredPriority: 3,
-    title: 'Windows Server / Active Directory Lab',
+    title: 'Windows Server & Active Directory Lab',
     status: 'Completed',
-    summary: 'A Windows Server lab for practicing identity, policy, DNS, and everyday administration.',
-    description: 'An environment for learning identity, policy, DNS, and administration.',
-    detail: 'A hands on Windows Server lab exploring domain services, users and groups, Group Policy, and the day to day work of administration.',
-    tags: ['Windows Server', 'Active Directory', 'GPO', 'DNS'],
+    summary: 'Built and administered a three-machine Windows environment, from virtual networking and DNS to Active Directory, domain membership, and automated tasks with PowerShell.',
+    description: 'Built a multi-VM Windows Server lab for networking, Active Directory, DNS, user and OU administration, Task Scheduler, and PowerShell automation.',
+    detail: 'Two Windows Server 2025 VMs and a Windows 11 Education client formed a progressively built savn.local domain in VMware Workstation.',
+    tags: ['Windows Server 2025', 'Windows 11', 'Active Directory', 'Active Directory Domain Services', 'DNS', 'PowerShell', 'Task Scheduler', 'VMware Workstation', 'Virtual Networking', 'System Administration'],
     image: '/images/projects/windows-server.webp',
-    imageAlt: 'Screenshot of my hypervisor running 3 Virtual Machines.',
+    imageAlt: 'VMware Workstation showing the three virtual machines in the Windows lab.',
     caseStudy: {
-      overview: 'This lab is a place to work through domain services, user and group administration, Group Policy, and the supporting DNS configuration.',
-      motivation: 'I built it to practice the routine decisions involved in managing a Windows environment, with room to record specific configurations and fixes as the lab grows.',
+      overview: 'I built a three-machine lab with two Windows Server 2025 VMs and a Windows 11 Education client. After checking IP configuration and connectivity across the virtual network, I promoted the primary server to a domain controller for savn.local. I then added DNS, domain membership, organizational units, user administration, scheduled tasks, and PowerShell automation.',
+      motivation: 'I wanted to see how everyday Windows administration fits together in a working environment. Each stage depended on the last: network connectivity first, then DNS and the directory, then centralized accounts and automated tasks.',
       implementation: [
-        { title: 'Identity', description: 'Explore users, groups, and the domain services that connect them.' },
-        { title: 'Policy and DNS', description: 'Practice Group Policy and DNS administration in a controlled lab.' },
+        { title: 'Virtual networking', description: 'Created three VMs in VMware Workstation, reviewed their IP configuration, and used ping from each system to confirm that all three could communicate.' },
+        { title: 'Active Directory and DNS', description: 'Installed Active Directory Domain Services, promoted JMD-SU26-S25-S1 to the savn.local domain controller, configured DNS, and joined the member server and Windows 11 client to the domain.' },
+        { title: 'Organizational units', description: 'Created Administration, Research, and Sales OUs to organize domain objects and give the directory a clear administrative structure.' },
+        { title: 'Local and domain accounts', description: 'Created local and domain users, placed a domain user in the Administration OU, and tested both types of login. I also checked what happened when the domain controller was unavailable.' },
+        { title: 'Task Scheduler', description: 'Created a task from the domain controller for the second Windows Server. A domain-user logon trigger launched Notepad when that user signed in.' },
+        { title: 'PowerShell automation', description: 'Wrote a PowerShell script and scheduled it to run at logon, displaying a welcome message, the current date and time, and the domain name.' },
       ],
       challenges: [],
-      lessons: [],
-      media: [],
+      lessons: [
+        'This lab connected Windows administration concepts that made more sense together than in isolation. Network connectivity had to work before DNS and Active Directory could support the rest of the environment.',
+        'Managing local and domain accounts side by side made the difference between machine-level access and centralized authentication concrete. The OUs gave the directory a useful structure for administration.',
+        'Testing a login while the domain controller was unavailable made the dependency on centralized services especially clear. Remote scheduled tasks and the PowerShell logon script showed how administration can move from manual steps toward repeatable actions.',
+      ],
+      media: [
+        { alt: 'Planned screenshot of connectivity between all three VMs', caption: 'Connectivity across the three-machine virtual network', plannedPath: '/images/projects/windows-lab/connectivity.webp' },
+        { alt: 'Planned screenshot of Active Directory Users and Computers', caption: 'Active Directory Users and Computers', plannedPath: '/images/projects/windows-lab/active-directory.webp' },
+        { alt: 'Planned screenshot of the Administration, Research, and Sales organizational units', caption: 'Administration, Research, and Sales OUs', plannedPath: '/images/projects/windows-lab/organizational-units.webp' },
+        { alt: 'Planned screenshot of a domain user in the Administration OU', caption: 'Domain user in the Administration OU', plannedPath: '/images/projects/windows-lab/domain-user.webp' },
+        { alt: 'Planned screenshot of a successful domain login', caption: 'Successful domain login', plannedPath: '/images/projects/windows-lab/domain-login.webp' },
+        { alt: 'Planned screenshot of login behavior without the domain controller', caption: 'Login behavior with the domain controller unavailable', plannedPath: '/images/projects/windows-lab/controller-unavailable.webp' },
+        { alt: 'Planned screenshot of the remote scheduled task configuration', caption: 'Remote task in Task Scheduler', plannedPath: '/images/projects/windows-lab/task-scheduler.webp' },
+        { alt: 'Planned screenshot of the PowerShell scheduled task output', caption: 'PowerShell logon script output', plannedPath: '/images/projects/windows-lab/powershell-output.webp' },
+      ],
       relatedNotes: [],
     },
-  },
+  }
 ];
 
 export const interests = [

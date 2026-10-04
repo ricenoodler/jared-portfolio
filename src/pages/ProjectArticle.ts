@@ -1,6 +1,7 @@
 import { sortedProjects } from '../content';
 import { notes } from '../notes';
 import { ProjectArchitecture } from '../components/ProjectArchitecture';
+import { WindowsArchitecture } from '../components/WindowsArchitecture';
 import { arrow, escapeHtml, internalLink } from '../utils';
 
 function formatDate(date: string): string {
@@ -46,7 +47,7 @@ export function ProjectArticle(slug: string): string {
         <div class="case-section-copy"><p>${escapeHtml(study.overview)}</p><h3>Why I built it</h3><p>${escapeHtml(study.motivation)}</p></div>
       </div>
     </section>
-    ${ProjectArchitecture(project)}
+    ${project.slug === 'windows-server-ad-lab' ? WindowsArchitecture() : ProjectArchitecture(project)}
     <section class="case-section case-work" id="work" aria-labelledby="work-title">
       <div class="shell case-section-grid">
         <div class="case-section-heading"><span class="case-section-number">03 / THE WORK</span><h2 id="work-title">What I worked on<span class="accent-dot">.</span></h2></div>
@@ -55,7 +56,7 @@ export function ProjectArticle(slug: string): string {
     </section>
     ${study.challenges.length ? `<section class="case-section" id="challenges" aria-labelledby="challenges-title"><div class="shell case-section-grid"><div class="case-section-heading"><span class="case-section-number">04 / TROUBLESHOOTING</span><h2 id="challenges-title">Challenges<span class="accent-dot">.</span></h2></div><div class="case-work-list">${study.challenges.map((item) => `<div class="case-challenge"><h3>${escapeHtml(item.title)}</h3><dl><div><dt>Diagnosis</dt><dd>${escapeHtml(item.diagnosis)}</dd></div><div><dt>Resolution</dt><dd>${escapeHtml(item.resolution)}</dd></div></dl></div>`).join('')}</div></div></section>` : ''}
     ${study.lessons.length ? `<section class="case-section" id="lessons" aria-labelledby="lessons-title"><div class="shell case-section-grid"><div class="case-section-heading"><span class="case-section-number">05 / REFLECTION</span><h2 id="lessons-title">What I learned<span class="accent-dot">.</span></h2></div><ul class="case-lessons">${study.lessons.map((lesson) => `<li>${escapeHtml(lesson)}</li>`).join('')}</ul></div></section>` : ''}
-    ${study.media.length ? `<section class="case-section" id="media" aria-labelledby="media-title"><div class="shell"><div class="case-section-heading"><span class="case-section-number">06 / DETAILS</span><h2 id="media-title">Screenshots &amp; media<span class="accent-dot">.</span></h2></div><div class="case-media-grid">${study.media.map((item) => `<figure><img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" /><figcaption>${escapeHtml(item.caption)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
+    ${study.media.length ? `<section class="case-section" id="media" aria-labelledby="media-title"><div class="shell"><div class="case-section-heading"><span class="case-section-number">06 / DETAILS</span><h2 id="media-title">Screenshots &amp; media<span class="accent-dot">.</span></h2></div><div class="case-media-grid${project.slug === 'windows-server-ad-lab' ? ' windows-media' : ''}">${study.media.map((item) => `<figure>${item.src ? `<img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy" />` : `<div class="case-media-placeholder" role="img" aria-label="${escapeHtml(item.alt)}"><span>Screenshot coming soon</span></div>`}<figcaption>${escapeHtml(item.caption)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
     ${related.length ? `<section class="case-section" id="related-notes" aria-labelledby="related-notes-title"><div class="shell case-section-grid"><div class="case-section-heading"><span class="case-section-number">07 / FIELD NOTES</span><h2 id="related-notes-title">Related notes<span class="accent-dot">.</span></h2></div><div class="case-related">${related.map((note) => internalLink(`/notes/${note.slug}`, `${escapeHtml(note.title)} ${arrow}`)).join('')}</div></div></section>` : ''}
     <nav class="case-pagination shell" aria-label="Project navigation">
       <div>${previous ? internalLink(`/projects/${previous.slug}`, `<span>Previous project</span><strong>← ${escapeHtml(previous.title)}</strong>`) : ''}</div>

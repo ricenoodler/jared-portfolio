@@ -64,7 +64,7 @@ try {
     const response = await page.goto(`${base}${path}`, { waitUntil: 'networkidle' });
     results.mobileRoutes[path] = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth, h1: document.querySelector('h1')?.textContent }));
     results.mobileRoutes[path].status = response?.status();
-    if (path === '/projects' || path === '/projects/proxmox-homelab' || path === '/notes/building-my-portfolio') await page.screenshot({ path: `.qa/check-mobile-${path.replaceAll('/', '-').slice(1)}.png`, fullPage: true, animations: 'disabled' });
+    if (path === '/projects' || path === '/projects/proxmox-homelab' || path === '/projects/windows-server-ad-lab' || path === '/notes/building-my-portfolio') await page.screenshot({ path: `.qa/check-mobile-${path.replaceAll('/', '-').slice(1)}.png`, fullPage: true, animations: 'disabled' });
     await page.close();
   }
   results.breakpoints = {};
@@ -95,7 +95,7 @@ try {
   assert.equal(results.projectNavigation.hash, '');
   assert.equal(results.proxmox.h1, 'Proxmox Homelab.');
   assert.equal(results.unifi.h1, 'UniFi Network Segmentation.');
-  assert.equal(results.windows.h1, 'Windows Server / Active Directory Lab.');
+  assert.equal(results.windows.h1, 'Windows Server & Active Directory Lab.');
   assert.match(results.missingProject.h1, /Wrong turn/);
   assert.equal(results.menu.expanded, 'true');
   assert.equal(results.menu.visible, true);
