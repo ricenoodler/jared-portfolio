@@ -44,22 +44,23 @@ try {
   await desktop.page.close();
   const mobile = await check('/', 390, 844, 'check-mobile.png'); results.mobile = mobile.metrics;
   await mobile.page.evaluate(() => document.querySelector('.menu-toggle')?.click());
-  results.menu = { expanded: await mobile.page.locator('.menu-toggle').getAttribute('aria-expanded'), visible: await mobile.page.locator('.primary-nav').isVisible() };
+  results.menu = { expanded: await mobile.page.locator('.menu-toggle').getAttribute('aria-expanded'), visible: await mobile.page.locator('.mobile-nav-dialog').isVisible() };
   await mobile.page.keyboard.press('Escape');
+  await mobile.page.waitForFunction(() => document.querySelector('.menu-toggle')?.getAttribute('aria-expanded') === 'false');
   results.menuEscape = await mobile.page.locator('.menu-toggle').getAttribute('aria-expanded');
   await mobile.page.evaluate(() => document.querySelector('[data-moment="0"]')?.click());
   results.moment = await mobile.page.locator('.moment-dialog').evaluate((dialog) => dialog.open);
   await mobile.page.keyboard.press('Escape');
   results.momentEscape = await mobile.page.locator('.moment-dialog').evaluate((dialog) => dialog.open);
   await mobile.page.close();
-  for (const [name, path] of Object.entries({ projects: '/projects', proxmox: '/projects/proxmox-homelab', unifi: '/projects/unifi-network-segmentation', windows: '/projects/windows-server-ad-lab', missingProject: '/projects/not-a-project', notes: '/notes', article: '/notes/building-my-portfolio', resume: '/resume', unknown: '/unknown' })) {
+  for (const [name, path] of Object.entries({ projects: '/projects', proxmox: '/projects/proxmox-homelab', unifi: '/projects/unifi-network-segmentation', windows: '/projects/windows-server-ad-lab', missingProject: '/projects/not-a-project', notes: '/notes', article: '/notes/building-my-portfolio', removedResume: '/resume', unknown: '/unknown' })) {
     const checked = await check(path, 1440, 900, `check-${name}.png`);
     results[name] = checked.metrics;
     if (name === 'projects') results.projectLinks = await checked.page.locator('.project-detail-image').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
     await checked.page.close();
   }
   results.mobileRoutes = {};
-  for (const path of ['/projects', '/projects/proxmox-homelab', '/projects/unifi-network-segmentation', '/projects/windows-server-ad-lab', '/notes', '/notes/building-my-portfolio', '/resume']) {
+  for (const path of ['/projects', '/projects/proxmox-homelab', '/projects/unifi-network-segmentation', '/projects/windows-server-ad-lab', '/notes', '/notes/building-my-portfolio']) {
     const page = await browser.newPage({ viewport: { width: 320, height: 760 }, isMobile: true, reducedMotion: 'reduce' });
     const response = await page.goto(`${base}${path}`, { waitUntil: 'networkidle' });
     results.mobileRoutes[path] = await page.evaluate(() => ({ viewport: innerWidth, documentWidth: document.documentElement.scrollWidth, h1: document.querySelector('h1')?.textContent }));
@@ -97,6 +98,7 @@ try {
   assert.equal(results.unifi.h1, 'UniFi Network Segmentation.');
   assert.equal(results.windows.h1, 'Windows Server & Active Directory Lab.');
   assert.match(results.missingProject.h1, /Wrong turn/);
+  assert.match(results.removedResume.h1, /Wrong turn/);
   assert.equal(results.menu.expanded, 'true');
   assert.equal(results.menu.visible, true);
   assert.equal(results.menuEscape, 'false');
@@ -104,7 +106,7 @@ try {
   assert.equal(results.momentEscape, false);
   assert.equal(results.motion.visible, true);
   assert.ok(results.breakpoints[320].footerBrandRight <= 320);
-  for (const checked of [results.desktop, results.mobile, results.projects, results.proxmox, results.unifi, results.windows, results.notes, results.article, results.resume, ...Object.values(results.mobileRoutes), ...Object.values(results.breakpoints)]) {
+  for (const checked of [results.desktop, results.mobile, results.projects, results.proxmox, results.unifi, results.windows, results.notes, results.article, results.removedResume, ...Object.values(results.mobileRoutes), ...Object.values(results.breakpoints)]) {
     assert.equal(checked.documentWidth, checked.width ?? checked.viewport);
     if ('status' in checked) assert.equal(checked.status, 200);
   }

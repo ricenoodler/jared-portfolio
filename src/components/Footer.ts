@@ -28,7 +28,7 @@ export function Footer(): string {
           // Internal site links.
           internalLink('/projects', 'Projects') +
           internalLink('/notes', 'Notes') +
-          internalLink('/resume', 'Resume') +
+      '<a href="' + escapeHtml(site.resume) + '" target="_blank" rel="noopener noreferrer">Resume</a>' +
 
           // Only show GitHub if a URL exists.
           (

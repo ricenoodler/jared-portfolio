@@ -80,9 +80,9 @@ export function Hero(): string {
             // Only show Resume if a resume URL exists.
             (
               site.resume
-                ? '<a href="' +
-                    escapeHtml(site.resume) +
-                    '">' +
+          ? '<a href="' +
+            escapeHtml(site.resume) +
+            '" target="_blank" rel="noopener noreferrer">' +
                     'Resume \u2197' +
                   '</a>'
                 : ''

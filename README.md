@@ -1,6 +1,6 @@
 # Jared Del Mundo portfolio
 
-A long form personal portfolio built with Vite and TypeScript. The homepage has eight sections: hero, featured projects, interests, values, trivia, moments, latest notes, and footer. `/projects`, `/notes`, individual note and project URLs, and `/resume` are available as direct routes.
+A long form personal portfolio built with Vite and TypeScript. The homepage has eight sections: hero, featured projects, interests, values, trivia, moments, latest notes, and footer. `/projects`, `/notes`, and individual note and project URLs are available as direct routes.
 
 ## Run it
 
@@ -47,7 +47,7 @@ Every current `.svg` is an illustrated placeholder. Replace the path in `src/con
 
 ## Links and resume
 
-The LinkedIn link was recovered from the previous site. The GitHub profile comes from the repository remote, and the email address comes from its Git author configuration. All are editable in `src/content.ts`. `/resume` is a readable web resume with known information. To offer a PDF, place it at `public/resume.pdf` and add a download link to `src/pages/Resume.ts`.
+Edit Instagram, GitHub, LinkedIn, email, and resume links in `src/content.ts`. Add your Instagram profile URL to `site.instagram` when ready. Place your PDF at `public/resume.pdf`; the Resume icon opens `/resume.pdf` in a new tab. There is no `/resume` page.
 
 ## Existing source
 

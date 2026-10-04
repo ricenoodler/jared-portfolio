@@ -2,9 +2,10 @@
 export const site = {
   name: 'Jared Del Mundo',
   email: 'jared@delmundo.info',
+  instagram: 'https://www.instagram.com/from_jared/',
   github: 'https://github.com/ricenoodler',
   linkedin: 'https://www.linkedin.com/in/jared-del-mundo-99ba23245/',
-  resume: '/resume', // This route can later link to a PDF in public/resume.pdf.
+  resume: '/resume.pdf', // Place the PDF at public/resume.pdf.
 };
 
 export interface Project {

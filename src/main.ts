@@ -1,6 +1,7 @@
 import './style.css';
 import './homepage.css';
 import './project-pages.css';
+import './navbar.css';
 import { Footer } from './components/Footer';
 import { initProjectArchitectures } from './components/ProjectArchitecture';
 import { Header } from './components/Header';
@@ -10,7 +11,6 @@ import { Home } from './pages/Home';
 import { NoteArticle, NotesIndex } from './pages/Notes';
 import { Projects } from './pages/Projects';
 import { ProjectArticle } from './pages/ProjectArticle';
-import { Resume } from './pages/Resume';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 if (!app) throw new Error('Missing #app root');
@@ -26,16 +26,15 @@ function pageContent(path: string): string {
   if (path.startsWith('/projects/')) return ProjectArticle(path.slice('/projects/'.length));
   if (path === '/notes') return NotesIndex();
   if (path.startsWith('/notes/')) return NoteArticle(path.slice('/notes/'.length));
-  if (path === '/resume') return Resume();
   return `<main class="subpage missing-page"><div class="shell"><span class="page-kicker">404 / NOT FOUND</span><h1>Wrong turn<span class="accent-dot">.</span></h1><p>There’s no page at this address.</p><a href="/" data-link class="button button-navy">Go home →</a></div></main>`;
 }
 
 function setPageTitle(path: string): void {
   const project = path.startsWith('/projects/') ? sortedProjects.find((entry) => entry.slug === path.slice('/projects/'.length)) : undefined;
   const note = path.startsWith('/notes/') ? notes.find((entry) => entry.slug === path.slice('/notes/'.length)) : undefined;
-  const label = path === '/' ? 'IT, systems & everything in between' : path === '/projects' ? 'Projects' : path === '/notes' ? 'Notes' : path === '/resume' ? 'Resume' : project?.title ?? note?.title ?? 'Page not found';
+  const label = path === '/' ? 'IT, systems & everything in between' : path === '/projects' ? 'Projects' : path === '/notes' ? 'Notes' : project?.title ?? note?.title ?? 'Page not found';
   document.title = `${label} — Jared Del Mundo`;
-  const description = path === '/' ? 'Jared Del Mundo is an Information Technology student exploring systems, networks, aviation, and the things that keep him curious.' : path === '/projects' ? 'Explore Jared Del Mundo’s hands on systems, networking, and infrastructure projects.' : path === '/notes' ? 'Notes from Jared Del Mundo on technology, troubleshooting, and the things he is learning.' : path === '/resume' ? 'Jared Del Mundo’s web resume, focus areas, and current IT lab work.' : project?.summary ?? note?.excerpt ?? 'Jared Del Mundo’s personal portfolio.';
+  const description = path === '/' ? 'Jared Del Mundo is an Information Technology student exploring systems, networks, aviation, and the things that keep him curious.' : path === '/projects' ? 'Explore Jared Del Mundo’s hands on systems, networking, and infrastructure projects.' : path === '/notes' ? 'Notes from Jared Del Mundo on technology, troubleshooting, and the things he is learning.' : project?.summary ?? note?.excerpt ?? 'Jared Del Mundo’s personal portfolio.';
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
 }
 
@@ -46,6 +45,13 @@ function render(): void {
   const content = pageContent(path);
   const pageBody = path === '/' ? `<main id="main-content" tabindex="-1" class="home-page">${content}</main>` : `<div id="main-content" tabindex="-1">${content}</div>`;
   app.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><div id="top"></div>${Header()}${pageBody}${Footer()}<dialog class="moment-dialog" aria-label="Moment details"><button type="button" class="dialog-close" aria-label="Close image">×</button><div class="dialog-content"></div></dialog><dialog class="case-media-dialog" aria-label="Project screenshot"><button type="button" class="case-media-close" aria-label="Close screenshot">×</button><img alt="" /><p class="case-media-dialog-caption"></p></dialog>`;
+  const mobileMenuButton = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  document.querySelector<HTMLDialogElement>('.mobile-nav-dialog')?.addEventListener('close', () => {
+    document.body.classList.remove('mobile-nav-open');
+    mobileMenuButton?.setAttribute('aria-expanded', 'false');
+    mobileMenuButton?.setAttribute('aria-label', 'Open navigation');
+    if (mobileMenuButton?.isConnected) mobileMenuButton.focus();
+  });
   setPageTitle(path);
   initProjectArchitectures();
   revealObserver.disconnect();
@@ -69,25 +75,23 @@ function updateHeader(): void {
 
 window.addEventListener('scroll', updateHeader, { passive: true });
 window.addEventListener('popstate', () => { render(); window.scrollTo(0, 0); });
-document.addEventListener('keydown', (event) => {
-  if (event.key !== 'Escape') return;
-  const button = document.querySelector<HTMLButtonElement>('.menu-toggle[aria-expanded="true"]');
-  if (!button) return;
-  button.setAttribute('aria-expanded', 'false');
-  button.setAttribute('aria-label', 'Open navigation');
-  document.querySelector('.primary-nav')?.classList.remove('is-open');
-  button.focus();
-});
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement;
   const menuButton = target.closest<HTMLButtonElement>('.menu-toggle');
   if (menuButton) {
-    const open = menuButton.getAttribute('aria-expanded') !== 'true';
-    menuButton.setAttribute('aria-expanded', String(open));
-    menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-    document.querySelector('.primary-nav')?.classList.toggle('is-open', open);
+    const dialog = document.querySelector<HTMLDialogElement>('.mobile-nav-dialog');
+    if (dialog && !dialog.open) {
+      dialog.showModal();
+      document.body.classList.add('mobile-nav-open');
+      menuButton.setAttribute('aria-expanded', 'true');
+      menuButton.setAttribute('aria-label', 'Close navigation');
+      dialog.querySelector<HTMLButtonElement>('.mobile-nav-close')?.focus();
+    }
     return;
   }
+  if (target.closest('.mobile-nav-close')) { document.querySelector<HTMLDialogElement>('.mobile-nav-dialog')?.close(); return; }
+  const mobileNavLink = target.closest<HTMLAnchorElement>('.mobile-nav-dialog a');
+  if (mobileNavLink) document.querySelector<HTMLDialogElement>('.mobile-nav-dialog')?.close();
   const momentButton = target.closest<HTMLButtonElement>('[data-moment]');
   if (momentButton) {
     const moment = moments[Number(momentButton.dataset.moment)];
@@ -126,6 +130,7 @@ document.addEventListener('click', (event) => {
     event.preventDefault();
     if (url.pathname !== window.location.pathname || url.hash !== window.location.hash) history.pushState({}, '', url.pathname + url.hash);
     render();
+    if (mobileNavLink) document.querySelector<HTMLElement>('#main-content')?.focus();
     if (!url.hash) window.scrollTo({ top: 0, behavior: 'instant' });
   }
 });
