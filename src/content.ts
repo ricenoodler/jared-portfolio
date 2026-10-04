@@ -131,8 +131,10 @@ export const aboutContent = {
   heading: 'About Me',
   subheading: 'A little more about me.',
   paragraphs: [
-    'I’m Jared, an Information Technology student who enjoys systems, networking, self-hosting, and figuring out how things work.',
-    'Outside of IT, aviation, music, photography, faith, and travel are a big part of who I am.',
+    'I have a REALLY bad habit of getting way too interested in things, which usually starts with “I’ll just try this” and ends with me several hours deep into something I definitely did not plan on doing. (Like making this website!)',
+    'Right now, I’m finishing my IT degree at UCF, building experience, and figuring out what I want the next few years of my life to look like. I like learning things because they’re genuinely interesting to me, not just because they make a good résumé bullet.',
+    'I care a lot about doing things well, being useful to the people around me, and making room for the things I actually enjoy.',
+    'Welcome to my website and enjoy my collection of projects and thoughts I CAN’T fit on a resume!',
   ],
 };
 
