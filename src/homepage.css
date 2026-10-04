@@ -10,6 +10,9 @@
   overflow: clip;
 }
 
+.home-page .section-kicker { justify-content: flex-end; gap: 12px; }
+.home-page .section-kicker::before { content: ''; width: 26px; height: 1px; background: currentColor; opacity: .55; }
+
 .home-page > section:not(.hero) .shell {
   width: min(100% - 9vw, 1260px);
 }
@@ -344,27 +347,7 @@
   line-height: 1.65;
 }
 
-.home-page .interest-japanese {
-  position: absolute;
-  inset: 14px 14px auto auto;
-  z-index: 2;
-  display: flex;
-  width: auto;
-  flex-direction: row;
-  gap: 5px;
-  padding: 7px 10px;
-  border: 1px solid rgba(255, 255, 255, .7);
-  border-radius: 2px;
-  background: rgba(12, 27, 52, .78);
-  color: white;
-  font-size: .9rem;
-  backdrop-filter: blur(8px);
-}
 
-.home-page .interest-japanese span:first-child {
-  writing-mode: horizontal-tb;
-  letter-spacing: 0;
-}
 
 .home-page .values {
   position: relative;

@@ -12,9 +12,7 @@ export function Values(): string {
 
         ${
           // Small section label shown above the heading.
-          // "大切にしていること" means something like
-          // "things that are important to me."
-          sectionLabel('大切にしていること', '02')
+              sectionLabel('02')
         }
 
         <div class="section-heading reveal">

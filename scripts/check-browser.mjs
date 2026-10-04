@@ -37,6 +37,8 @@ try {
   const results = {};
   const desktop = await check('/', 1440, 900, 'check-desktop.png'); results.desktop = desktop.metrics;
   results.homeSections = await desktop.page.locator('main > section').evaluateAll((sections) => sections.map((section) => section.id || 'hero'));
+  assert.equal(await desktop.page.locator('[lang="ja"]').count(), 0);
+  assert.doesNotMatch(await desktop.page.locator('main').innerText(), /[ぁ-んァ-ン一-龯]/);
   results.homeCounts = await desktop.page.evaluate(() => ({ projects: document.querySelectorAll('.project-card').length, interests: document.querySelectorAll('.interest-row').length, values: document.querySelectorAll('.value-item').length, trivia: document.querySelectorAll('.trivia-list li').length, moments: document.querySelectorAll('.moment-tile').length, notes: document.querySelectorAll('.latest-notes .note-row').length }));
   results.homeFeaturedLinks = await desktop.page.locator('.project-card .project-image').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
   assert.equal(await desktop.page.locator('.hero-actions a[href="#about"]').count(), 1);

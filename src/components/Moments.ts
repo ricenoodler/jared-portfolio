@@ -12,8 +12,7 @@ export function Moments(): string {
 
         ${
           // Small section label above the heading.
-          // "いくつかの瞬間" roughly means "a few moments."
-          sectionLabel('いくつかの瞬間', '04')
+              sectionLabel('04')
         }
 
         <div class="section-heading reveal">

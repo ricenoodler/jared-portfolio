@@ -38,7 +38,7 @@ export function LatestNotes(): string {
       '<div class="shell">' +
 
         // Small section label shown above the heading.
-        sectionLabel('最近のノート', '05') +
+          sectionLabel('05') +
 
         // Section heading and short description.
         '<div class="section-heading reveal">' +

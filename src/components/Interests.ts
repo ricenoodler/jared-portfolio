@@ -12,8 +12,7 @@ export function Interests(): string {
 
         ${
           // Small section label shown above the heading.
-          // "好きなもの" roughly means "things I like."
-          sectionLabel('好きなもの', '01')
+              sectionLabel('01')
         }
 
         <div class="section-heading interests-heading reveal">
@@ -74,24 +73,6 @@ export function Interests(): string {
                     alt="${escapeHtml(interest.alt)}"
                     loading="lazy"
                   />
-
-                  <!-- Japanese label shown on the right side of the row. -->
-                  <div class="interest-japanese">
-
-                    <!--
-                      lang="ja" tells browsers and screen readers that
-                      this text is Japanese.
-                    -->
-                    <span lang="ja">
-                      ${interest.japanese}
-                    </span>
-
-                    <!-- Decorative airplane icon. -->
-                    <span aria-hidden="true">
-                      ✈
-                    </span>
-
-                  </div>
 
                 </article>
               `)

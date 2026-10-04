@@ -19,9 +19,6 @@ export function Projects(): string {
 
           <span class="page-kicker">
             01 / SELECTED WORK
-            <span lang="ja">
-              プロジェクト
-            </span>
           </span>
 
           <h1>
