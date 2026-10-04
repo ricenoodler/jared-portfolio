@@ -31,7 +31,7 @@ export function Hero(): string {
 
           // Short introduction under the heading.
           '<p class="hero-intro reveal">' +
-            'I\u2019m an Information Technology major @ UCF!' +
+            'I\u2019m an Information Technology major @ UCF focused on building hands-on experience in systems administration, networking, virtualization, and automation!' +
           '</p>' +
 
           // Hero action links/buttons.
@@ -47,7 +47,7 @@ export function Hero(): string {
             ' ' +
 
             // Scrolls to the "interests" section on the same page.
-            '<a href="#interests" class="text-link">' +
+            '<a href="#about" class="text-link">' +
               'A little about me ' +
 
               // \u2192 = right arrow.

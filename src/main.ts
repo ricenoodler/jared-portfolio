@@ -2,8 +2,10 @@ import './style.css';
 import './homepage.css';
 import './project-pages.css';
 import './navbar.css';
+import './about.css';
 import { Footer } from './components/Footer';
 import { initProjectArchitectures } from './components/ProjectArchitecture';
+import { initPhotoCarousels } from './components/PhotoCarousel';
 import { Header } from './components/Header';
 import { moments, sortedProjects } from './content';
 import { notes } from './notes';
@@ -54,6 +56,7 @@ function render(): void {
   });
   setPageTitle(path);
   initProjectArchitectures();
+  initPhotoCarousels();
   revealObserver.disconnect();
   document.querySelectorAll<HTMLElement>('.reveal').forEach((element) => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { element.classList.add('is-visible'); return; }

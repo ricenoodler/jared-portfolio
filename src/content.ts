@@ -127,6 +127,32 @@ export const projects: Project[] = [
   }
 ];
 
+export const aboutContent = {
+  heading: 'About Me',
+  subheading: 'A little more about me.',
+  paragraphs: [
+    'I’m Jared, an Information Technology student who enjoys systems, networking, self-hosting, and figuring out how things work.',
+    'Outside of IT, aviation, music, photography, faith, and travel are a big part of who I am.',
+  ],
+};
+
+export interface AboutPhoto {
+  image: string;
+  alt: string;
+  caption: string;
+  plannedPath?: string;
+}
+
+// Replace image paths with your own photos in public/images/about/ as you add them.
+export const aboutPhotos: AboutPhoto[] = [
+  { image: '/images/about/aviation.webp', alt: 'Jared holding his private pilot certificate beside an aircraft and examiner', caption: 'Aviation and flight training' },
+  { image: '/images/about/music.gif', alt: 'Jared working on a music recording', caption: 'Making music' },
+  { image: '/images/about/travel.webp', alt: 'A Chicago train viewed during a trip', caption: 'Travel and photography' },
+  { image: '/images/about/homelab.webp', alt: 'Jared working inside a computer case', caption: 'Building and learning with technology' },
+  { image: '', alt: 'Pegasus Pilots photo to be added', caption: 'Pegasus Pilots', plannedPath: '/images/about/pegasus-pilots.webp' },
+  { image: '', alt: 'Church audiovisual team photo to be added', caption: 'Church AV', plannedPath: '/images/about/church-av.webp' },
+];
+
 export const interests = [
   { number: '01', title: 'Aviation', japanese: '飛行機', description: 'Airplanes, airports, and everything that gets off the ground. I’m working toward flight training and love anything aviation related.', image: '/images/interests/checkridedpe.webp', alt: 'Me holding my Private Pilots License standing next to a Designated Pilot Examiner (DPE)' },
   { number: '02', title: 'Music', japanese: '音楽', description: 'Whether it’s playing, listening, or discovering new artists, music has always been a huge part of my life.', image: '/images/interests/garagebandrecording.gif', alt: 'Illustrated placeholder of a record player' },

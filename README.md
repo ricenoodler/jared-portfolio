@@ -27,6 +27,8 @@ The GitHub Actions workflow builds and deploys `dist/` on pushes to `master`. Se
 
 ## Replace images
 
+For the homepage About Me section, edit `aboutContent` and `aboutPhotos` in `src/content.ts`. Place new carousel images in `public/images/about/` and set each photo's `image` path to `/images/about/<filename>`. Empty `image` values show a styled placeholder; `plannedPath` records the intended filename.
+
 Every current `.svg` is an illustrated placeholder. Replace the path in `src/content.ts` with a local `.webp`, `.avif`, or `.jpg` once you add the real image. Keep the filenames predictable:
 
 | Use | Suggested real asset |
