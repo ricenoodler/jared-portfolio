@@ -45,7 +45,7 @@ function render(): void {
   document.body.classList.toggle('is-home', path === '/');
   const content = pageContent(path);
   const pageBody = path === '/' ? `<main id="main-content" tabindex="-1" class="home-page">${content}</main>` : `<div id="main-content" tabindex="-1">${content}</div>`;
-  app.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><div id="top"></div>${Header()}${pageBody}${Footer()}<dialog class="moment-dialog" aria-label="Moment details"><button type="button" class="dialog-close" aria-label="Close image">×</button><div class="dialog-content"></div></dialog>`;
+  app.innerHTML = `<a class="skip-link" href="#main-content">Skip to content</a><div id="top"></div>${Header()}${pageBody}${Footer()}<dialog class="moment-dialog" aria-label="Moment details"><button type="button" class="dialog-close" aria-label="Close image">×</button><div class="dialog-content"></div></dialog><dialog class="case-media-dialog" aria-label="Project screenshot"><button type="button" class="case-media-close" aria-label="Close screenshot">×</button><img alt="" /><p class="case-media-dialog-caption"></p></dialog>`;
   setPageTitle(path);
   initProjectArchitectures();
   revealObserver.disconnect();
@@ -104,6 +104,20 @@ document.addEventListener('click', (event) => {
     }
     return;
   }
+  const mediaButton = target.closest<HTMLButtonElement>('.case-media-trigger');
+  if (mediaButton) {
+    const dialog = document.querySelector<HTMLDialogElement>('.case-media-dialog');
+    const image = dialog?.querySelector('img');
+    const caption = dialog?.querySelector<HTMLElement>('.case-media-dialog-caption');
+    if (dialog && image && caption && mediaButton.dataset.caseMediaSrc) {
+      image.src = mediaButton.dataset.caseMediaSrc;
+      image.alt = mediaButton.dataset.caseMediaAlt ?? '';
+      caption.textContent = mediaButton.dataset.caseMediaCaption ?? '';
+      dialog.showModal();
+    }
+    return;
+  }
+  if (target.closest('.case-media-close')) { document.querySelector<HTMLDialogElement>('.case-media-dialog')?.close(); return; }
   if (target.closest('.dialog-close')) { document.querySelector<HTMLDialogElement>('.moment-dialog')?.close(); return; }
   const link = target.closest<HTMLAnchorElement>('a[data-link]');
   if (link && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey) {

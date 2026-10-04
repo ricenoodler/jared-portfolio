@@ -112,14 +112,14 @@ export const projects: Project[] = [
         'Testing a login while the domain controller was unavailable made the dependency on centralized services especially clear. Remote scheduled tasks and the PowerShell logon script showed how administration can move from manual steps toward repeatable actions.',
       ],
       media: [
-        { alt: 'Planned screenshot of connectivity between all three VMs', caption: 'Connectivity across the three-machine virtual network', plannedPath: '/images/projects/windows-lab/connectivity.webp' },
-        { alt: 'Planned screenshot of Active Directory Users and Computers', caption: 'Active Directory Users and Computers', plannedPath: '/images/projects/windows-lab/active-directory.webp' },
-        { alt: 'Planned screenshot of the Administration, Research, and Sales organizational units', caption: 'Administration, Research, and Sales OUs', plannedPath: '/images/projects/windows-lab/organizational-units.webp' },
-        { alt: 'Planned screenshot of a domain user in the Administration OU', caption: 'Domain user in the Administration OU', plannedPath: '/images/projects/windows-lab/domain-user.webp' },
-        { alt: 'Planned screenshot of a successful domain login', caption: 'Successful domain login', plannedPath: '/images/projects/windows-lab/domain-login.webp' },
-        { alt: 'Planned screenshot of login behavior without the domain controller', caption: 'Login behavior with the domain controller unavailable', plannedPath: '/images/projects/windows-lab/controller-unavailable.webp' },
-        { alt: 'Planned screenshot of the remote scheduled task configuration', caption: 'Remote task in Task Scheduler', plannedPath: '/images/projects/windows-lab/task-scheduler.webp' },
-        { alt: 'Planned screenshot of the PowerShell scheduled task output', caption: 'PowerShell logon script output', plannedPath: '/images/projects/windows-lab/powershell-output.webp' },
+        { alt: 'Planned screenshot of connectivity between all three VMs', caption: 'Connectivity across the three-machine virtual network', src: '/images/projects/windows-lab/connectivity.webp' },
+        { alt: 'Planned screenshot of Active Directory Users and Computers', caption: 'Active Directory Users and Computers', src: '/images/projects/windows-lab/active-directory.webp' },
+        { alt: 'Planned screenshot of the Administration, Research, and Sales organizational units', caption: 'Administration, Research, and Sales OUs', src: '/images/projects/windows-lab/organizational-units.webp' },
+        { alt: 'Planned screenshot of a domain user in the Administration OU', caption: 'Domain user in the Administration OU', src: '/images/projects/windows-lab/domain-user.webp' },
+        { alt: 'Planned screenshot of a successful domain login', caption: 'Successful domain login', src: '/images/projects/windows-lab/domain-login.webp' },
+        { alt: 'Planned screenshot of login behavior without the domain controller', caption: 'Login behavior with the domain controller unavailable', src: '/images/projects/windows-lab/controller-unavailable.webp' },
+        { alt: 'Planned screenshot of the remote scheduled task configuration', caption: 'Remote task in Task Scheduler', src: '/images/projects/windows-lab/task-scheduler.webp' },
+        { alt: 'Planned screenshot of the PowerShell scheduled task output', caption: 'PowerShell logon script output', src: '/images/projects/windows-lab/powershell-output.webp' },
       ],
       relatedNotes: [],
     },
@@ -128,7 +128,7 @@ export const projects: Project[] = [
 
 export const interests = [
   { number: '01', title: 'Aviation', japanese: '飛行機', description: 'Airplanes, airports, and everything that gets off the ground. I’m working toward flight training and love anything aviation related.', image: '/images/interests/checkridedpe.webp', alt: 'Me holding my Private Pilots License standing next to a Designated Pilot Examiner (DPE)' },
-  { number: '02', title: 'Music', japanese: '音楽', description: 'Whether it’s playing, listening, or discovering new artists, music has always been a huge part of my life.', image: '/images/interests/music.svg', alt: 'Illustrated placeholder of a record player' },
+  { number: '02', title: 'Music', japanese: '音楽', description: 'Whether it’s playing, listening, or discovering new artists, music has always been a huge part of my life.', image: '/images/interests/garagebandrecording.gif', alt: 'Illustrated placeholder of a record player' },
   { number: '03', title: 'Photography / Travel', japanese: '写真・旅', description: 'I like capturing moments, exploring new places, and noticing good design in cities, architecture, and airports.', image: '/images/interests/trainchicago.webp', alt: 'Blurred picture of red line train through Howard Station in Chicago' },
   { number: '04', title: 'Technology', japanese: '技術', description: 'Servers, networking, self hosting, and tinkering with systems that probably don’t need to be this complicated.', image: '/images/interests/buildingnode.webp', alt: 'Illustrated placeholder of a desk and computer' },
 ];
